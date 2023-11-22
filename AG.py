@@ -176,29 +176,45 @@ def imprimeGrafico(dadosTestes, classeTeste, predicoes, pesosTreino, vies):
 	plt.title('Limite de Decisão')
 	plt.legend()
 	plt.show()
-    
-def main():
-	# Importando o dataset 'iris'.
-	iris = load_iris()
- 
-	# Parametros sepal length and sepal width
-	dados = iris.data[:100, :2] 
-	classes = iris.target[:100]
- 
-	# Separamos os dados em treino e teste.
-	dadosTreino, dadosTestes, classeTreino, classeTeste = train_test_split(dados, classes, test_size=0.7, random_state=42)
-	
-	melhor = AG(dadosTreino, classeTreino)
-	pesosTreino = melhor.cromossomo
-	vies = melhor.vies 
-	
-	# Testamos o perceptron
-	acuracia, predicoes = testa_perceptron(dadosTestes, classeTeste, pesosTreino, vies)
-	print(acuracia)
-	imprimeGrafico(dadosTestes, classeTeste, predicoes, pesosTreino, vies)
-	print("Fim")
 
+def classifica_dados(dados, pesos, vies):
+    predicoes = []
+    for i in range(dados.shape[0]):
+        produtoEscalar = np.dot(dados[i], pesos) + vies
+        predicao = 1 if produtoEscalar >= 0 else 0
+        predicoes.append(predicao)
+    return predicoes
+
+def main():
+    # Importando o dataset 'iris'.
+    iris = load_iris()
  
+    # Parametros sepal length and sepal width
+    dados = iris.data[:100, :2] 
+    classes = iris.target[:100]
+ 
+    # Separamos os dados em treino e teste.
+    dadosTreino, dadosTestes, classeTreino, classeTeste = train_test_split(dados, classes, test_size=0.7, random_state=42)
+    
+    melhor = AG(dadosTreino, classeTreino)
+    pesosTreino = melhor.cromossomo
+    vies = melhor.vies 
+    
+    # Testamos o perceptron
+    acuracia, predicoes = testa_perceptron(dadosTestes, classeTeste, pesosTreino, vies)
+    print(f"Acurácia nos dados de teste: {acuracia}")
+    imprimeGrafico(dadosTestes, classeTeste, predicoes, pesosTreino, vies)
+    # Gera um gráfico para comparar as predições com as classes reais
+    plt.scatter(dadosTestes[:, 0], dadosTestes[:, 1], c=predicoes, cmap='viridis', marker='o', label='Predições')
+    plt.scatter(dadosTestes[:, 0], dadosTestes[:, 1], c=classeTeste, cmap='viridis', marker='x', label='Classes Reais')
+
+    plt.xlabel('Comprimento da Sépala')
+    plt.ylabel('Largura da Sépala')
+    plt.title('Comparação das Predições com as Classes Reais')
+    plt.legend()
+    plt.show()
+
+    print("Fim")
  
 if __name__ == "__main__":
     main()
