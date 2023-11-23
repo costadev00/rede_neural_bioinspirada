@@ -18,7 +18,7 @@ class INDIVIDUO:
         self.vies = vies
         self.fitness = fitness	 # Erro médio quadrático
         
-def treina_perceptron(dadosTreino, classeTreino, pesos, learning_rate=0.01, epochs=100):
+def treina_perceptron(dadosTreino, classeTreino, pesos, learning_rate=0.01, epochs=50):
     vies = 0.0; erroQuadratico = 0.0
     for epoch in range(epochs):
         for i in range(dadosTreino.shape[0]):
@@ -186,13 +186,17 @@ def main():
 	classes = iris.target[:100]
  
 	# Separamos os dados em treino e teste.
-	dadosTreino, dadosTestes, classeTreino, classeTeste = train_test_split(dados, classes, test_size=0.7, random_state=42)
+	dadosTreino, dadosTestes, classeTreino, classeTeste = train_test_split(dados, classes, test_size=0.3, random_state=42)
 	
 	melhor = AG(dadosTreino, classeTreino)
 	pesosTreino = melhor.cromossomo
 	vies = melhor.vies 
+ 
+	# pesos = np.random.uniform(-1, 1, dadosTreino.shape[1])
+	# pesosTreino, vies, erroQuadratico = treina_perceptron(dadosTreino, classeTreino, pesos)
+	# print(erroQuadratico)
 	
-	# Testamos o perceptron
+ 	# Testamos o perceptron
 	acuracia, predicoes = testa_perceptron(dadosTestes, classeTeste, pesosTreino, vies)
 	print(acuracia)
 	imprimeGrafico(dadosTestes, classeTeste, predicoes, pesosTreino, vies)
