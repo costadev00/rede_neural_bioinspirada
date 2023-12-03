@@ -1,4 +1,7 @@
 # Projeto 2
+Implementação do GRASP(Greedy randomized adaptive search procedure) que resolve o problema de combinatória Knapsack problem(Problema da mochila), e faz a comparação entre o algoritmo de programação dinâmica convencional e o algoritmo genético GRASP.
+
+# Projeto 2
 
 Rede neural do tipo perceptron, de camada única. O objetivo é treinar de forma rápida e eficiente uma rede neural que poss classificar um tipo de planta em 3. 
 
