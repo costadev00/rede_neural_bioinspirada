@@ -1,4 +1,4 @@
-# Projeto 2
+# Projeto 1
 Implementação do GRASP(Greedy randomized adaptive search procedure) que resolve o problema de combinatória Knapsack problem(Problema da mochila), e faz a comparação entre o algoritmo de programação dinâmica convencional e o algoritmo genético GRASP.
 
 # Projeto 2
